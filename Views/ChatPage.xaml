@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="LoveChat_v2.Views.ChatPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:LoveChat_v2.Models"
+    Title="Chat">
+
+    <Grid
+        Padding="10"
+        RowDefinitions="*,Auto"
+        RowSpacing="10">
+
+        <!-- Messages -->
+        <CollectionView
+            Grid.Row="0"
+            ItemsSource="{Binding Messages}">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="models:Message">
+
+                    <Grid Padding="5">
+
+                        <Border
+                            Padding="12,8"
+                            StrokeThickness="0"
+                            MaximumWidthRequest="450">
+
+                            <Border.Triggers>
+
+                                <!-- Received message -->
+                                <DataTrigger
+                                    TargetType="Border"
+                                    Binding="{Binding IsMine}"
+                                    Value="False">
+
+                                    <Setter
+                                        Property="HorizontalOptions"
+                                        Value="Start" />
+
+                                    <Setter
+                                        Property="BackgroundColor"
+                                        Value="#2B2B2B" />
+
+                                </DataTrigger>
+
+                                <!-- Sent message -->
+                                <DataTrigger
+                                    TargetType="Border"
+                                    Binding="{Binding IsMine}"
+                                    Value="True">
+
+                                    <Setter
+                                        Property="HorizontalOptions"
+                                        Value="End" />
+
+                                    <Setter
+                                        Property="BackgroundColor"
+                                        Value="#8B5CF6" />
+
+                                </DataTrigger>
+
+                            </Border.Triggers>
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="16" />
+                            </Border.StrokeShape>
+
+                            <VerticalStackLayout Spacing="3">
+
+                                <Label
+                                    Text="{Binding Text}"
+                                    FontSize="16"
+                                    TextColor="White"
+                                    LineBreakMode="WordWrap" />
+
+                                <Label
+                                    Text="{Binding Time}"
+                                    FontSize="10"
+                                    TextColor="#CCCCCC"
+                                    HorizontalOptions="End" />
+
+                            </VerticalStackLayout>
+
+                        </Border>
+
+                    </Grid>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <!-- Write message -->
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="10">
+
+            <Entry
+                Text="{Binding NewMessage}"
+                Placeholder="Write a message..."
+                VerticalOptions="Center"
+                ReturnType="Send"
+                ReturnCommand="{Binding SendMessageCommand}" />
+
+            <Button
+                Grid.Column="1"
+                Text="Send"
+                Command="{Binding SendMessageCommand}"
+                VerticalOptions="Center" />
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

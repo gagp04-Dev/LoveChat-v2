@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="LoveChat_v2.Views.ChatsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="LoveChat">
+
+    <Grid
+        Padding="20"
+        RowDefinitions="Auto,*"
+        RowSpacing="20">
+
+        <Label
+            Text="Chats"
+            FontSize="32"
+            FontAttributes="Bold" />
+
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Conversations}">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <SwipeView>
+                        <Grid
+                            Padding="10"
+                            ColumnDefinitions="*,Auto"
+                            RowDefinitions="Auto,Auto">
+
+                            <Grid.GestureRecognizers>
+                                
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenChatCommand}"
+                                    CommandParameter="{Binding .}" />
+                                
+                            </Grid.GestureRecognizers>
+
+                            <Label
+                                Text="{Binding Name}"
+                                FontSize="18"
+                                FontAttributes="Bold" />
+
+                            <Label
+                                Grid.Row="1"
+                                Text="{Binding LastMessage}"
+                                FontSize="14"
+                                TextColor="Gray" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Time}"
+                                FontSize="12"
+                                TextColor="Gray" />
+
+                        </Grid>
+                    </SwipeView>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>
